@@ -30,8 +30,35 @@ jobs:
           distribution: temurin
           java-version: "17"
           cache: gradle
+      - name: Cache Xcode DerivedData
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: xcode-deriveddata-${{ runner.os }}-${{ hashFiles('**/*.xcodeproj/project.pbxproj', '**/*.xcworkspace/contents.xcworkspacedata', '**/*.swift', '**/*.m', '**/*.mm', '**/*.kt', '**/*.kts', '**/*.gradle.kts') }}
       - name: Build iOS shared framework
         run: ./gradlew :shared:compileKotlinIosArm64 :shared:compileKotlinIosSimulatorArm64
+      - name: Prepare iOS simulator
+        run: |
+          set -euo pipefail
+          RUNTIME=$(xcrun simctl list runtimes | rg -o "com.apple.CoreSimulator.SimRuntime.iOS[-0-9A-Za-z.]*" | head -n1)
+          DEVICETYPE=$(xcrun simctl list devicetypes | rg -o "com.apple.CoreSimulator.SimDeviceType.iPhone[-A-Za-z0-9]*" | head -n1)
+          if [[ -z "${RUNTIME}" || -z "${DEVICETYPE}" ]]; then
+            echo "No iOS runtime or iPhone device type found."
+            xcrun simctl list runtimes
+            xcrun simctl list devicetypes
+            exit 1
+          fi
+          SIM_ID=$(xcrun simctl create "CI iPhone" "${DEVICETYPE}" "${RUNTIME}")
+          echo "SIM_ID=${SIM_ID}" >> "${GITHUB_ENV}"
+      - name: Build iOS app (Simulator)
+        run: |
+          xcodebuild \
+            -project iosApp/iosApp.xcodeproj \
+            -scheme iosApp \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination "id=${SIM_ID}" \
+            build
       - name: Build iOS app
         run: |
           xcodebuild \
