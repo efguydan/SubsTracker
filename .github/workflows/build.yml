@@ -40,15 +40,43 @@ jobs:
       - name: Prepare iOS simulator
         run: |
           set -euo pipefail
-          RUNTIME=$(xcrun simctl list runtimes | grep -Eo "com\.apple\.CoreSimulator\.SimRuntime\.iOS[-0-9A-Za-z.]+" | head -n1)
-          DEVICETYPE=$(xcrun simctl list devicetypes | grep -Eo "com\.apple\.CoreSimulator\.SimDeviceType\.iPhone[-A-Za-z0-9]+" | head -n1)
-          if [[ -z "${RUNTIME}" || -z "${DEVICETYPE}" ]]; then
-            echo "No iOS runtime or iPhone device type found."
-            xcrun simctl list runtimes
-            xcrun simctl list devicetypes
-            exit 1
-          fi
-          SIM_ID=$(xcrun simctl create "CI iPhone" "${DEVICETYPE}" "${RUNTIME}")
+          SIM_ID=$(python3 - <<'PY'
+          import json
+          import subprocess
+
+          def run(cmd):
+            return subprocess.check_output(cmd, text=True)
+
+          def version_key(v):
+            parts = []
+            for p in v.split("."):
+              try:
+                parts.append(int(p))
+              except ValueError:
+                parts.append(0)
+            return tuple(parts)
+
+          runtimes = json.loads(run(["xcrun", "simctl", "list", "runtimes", "-j"]))["runtimes"]
+          devicetypes = json.loads(run(["xcrun", "simctl", "list", "devicetypes", "-j"]))["devicetypes"]
+
+          ios_runtimes = [r for r in runtimes if r["identifier"].startswith("com.apple.CoreSimulator.SimRuntime.iOS") and r.get("isAvailable", True)]
+          ios_runtimes.sort(key=lambda r: version_key(r.get("version", "0")), reverse=True)
+
+          iphone_types = [d for d in devicetypes if d["identifier"].startswith("com.apple.CoreSimulator.SimDeviceType.iPhone")]
+          iphone_types.sort(key=lambda d: d.get("name", ""), reverse=True)
+
+          for rt in ios_runtimes:
+            for dt in iphone_types:
+              try:
+                sim_id = run(["xcrun", "simctl", "create", "CI iPhone", dt["identifier"], rt["identifier"]]).strip()
+                print(sim_id)
+                raise SystemExit(0)
+              except subprocess.CalledProcessError:
+                continue
+
+          raise SystemExit("No compatible iPhone simulator could be created.")
+          PY
+          )
           echo "SIM_ID=${SIM_ID}" >> "${GITHUB_ENV}"
       - name: Build iOS app (Simulator)
         run: |
