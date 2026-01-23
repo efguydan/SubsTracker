@@ -30,8 +30,63 @@ jobs:
           distribution: temurin
           java-version: "17"
           cache: gradle
+      - name: Cache Xcode DerivedData
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: xcode-deriveddata-${{ runner.os }}-${{ hashFiles('**/*.xcodeproj/project.pbxproj', '**/*.xcworkspace/contents.xcworkspacedata', '**/*.swift', '**/*.m', '**/*.mm', '**/*.kt', '**/*.kts', '**/*.gradle.kts') }}
       - name: Build iOS shared framework
         run: ./gradlew :shared:compileKotlinIosArm64 :shared:compileKotlinIosSimulatorArm64
+      - name: Prepare iOS simulator
+        run: |
+          set -euo pipefail
+          SIM_ID=$(python3 - <<'PY'
+          import json
+          import subprocess
+
+          def run(cmd):
+            return subprocess.check_output(cmd, text=True)
+
+          def version_key(v):
+            parts = []
+            for p in v.split("."):
+              try:
+                parts.append(int(p))
+              except ValueError:
+                parts.append(0)
+            return tuple(parts)
+
+          runtimes = json.loads(run(["xcrun", "simctl", "list", "runtimes", "-j"]))["runtimes"]
+          devicetypes = json.loads(run(["xcrun", "simctl", "list", "devicetypes", "-j"]))["devicetypes"]
+
+          ios_runtimes = [r for r in runtimes if r["identifier"].startswith("com.apple.CoreSimulator.SimRuntime.iOS") and r.get("isAvailable", True)]
+          ios_runtimes.sort(key=lambda r: version_key(r.get("version", "0")), reverse=True)
+
+          iphone_types = [d for d in devicetypes if d["identifier"].startswith("com.apple.CoreSimulator.SimDeviceType.iPhone")]
+          iphone_types.sort(key=lambda d: d.get("name", ""), reverse=True)
+
+          for rt in ios_runtimes:
+            for dt in iphone_types:
+              try:
+                sim_id = run(["xcrun", "simctl", "create", "CI iPhone", dt["identifier"], rt["identifier"]]).strip()
+                print(sim_id)
+                raise SystemExit(0)
+              except subprocess.CalledProcessError:
+                continue
+
+          raise SystemExit("No compatible iPhone simulator could be created.")
+          PY
+          )
+          echo "SIM_ID=${SIM_ID}" >> "${GITHUB_ENV}"
+      - name: Build iOS app (Simulator)
+        run: |
+          xcodebuild \
+            -project iosApp/iosApp.xcodeproj \
+            -scheme iosApp \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination "id=${SIM_ID}" \
+            build
       - name: Build iOS app
         run: |
           xcodebuild \
