@@ -16,21 +16,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,12 +32,8 @@ import me.efedaniel.substracker.ui.proton.theme.ProtonTheme
 
 @Composable
 fun HomeRoute(modifier: Modifier = Modifier) {
-    var selectedTab by remember { mutableStateOf(HomeTab.Timeline) }
     HomeScreen(
         state = sampleHomeState,
-        selectedTab = selectedTab,
-        onTabSelected = { selectedTab = it },
-        onAddClick = {},
         modifier = modifier
     )
 }
@@ -55,47 +41,16 @@ fun HomeRoute(modifier: Modifier = Modifier) {
 @Composable
 fun HomeScreen(
     state: HomeUiState,
-    selectedTab: HomeTab,
-    onTabSelected: (HomeTab) -> Unit,
-    onAddClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val colors = ProtonTheme.colors
-    Scaffold(
-        modifier = modifier.fillMaxSize(),
-        containerColor = colors.surface,
-        bottomBar = {
-            HomeBottomBar(
-                selectedTab = selectedTab,
-                onTabSelected = onTabSelected
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onAddClick,
-                containerColor = colors.secondary,
-                contentColor = colors.white,
-                elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 6.dp)
-            ) {
-                Icon(imageVector = Icons.Outlined.Add, contentDescription = "Add")
-            }
-        }
-    ) { padding ->
-        when (selectedTab) {
-            HomeTab.Timeline -> HomeTimelineContent(
-                state = state,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-            )
-            else -> PlaceholderTab(
-                title = selectedTab.name,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-            )
-        }
-    }
+    HomeTimelineContent(
+        state = state,
+        modifier = modifier
+            .background(colors.surface)
+            .fillMaxSize()
+            .padding(top = 8.dp)
+    )
 }
 
 @Composable
@@ -309,33 +264,12 @@ private fun TimelineRow(
     }
 }
 
-@Composable
-private fun PlaceholderTab(
-    title: String,
-    modifier: Modifier = Modifier
-) {
-    val colors = ProtonTheme.colors
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = title,
-            style = androidx.compose.material3.MaterialTheme.typography.headlineMedium,
-            color = colors.onSurface
-        )
-    }
-}
-
 @Preview
 @Composable
 private fun HomePreview() {
     ProtonTheme(darkTheme = false) {
         HomeScreen(
             state = sampleHomeState,
-            selectedTab = HomeTab.Timeline,
-            onTabSelected = {},
-            onAddClick = {}
         )
     }
 }
