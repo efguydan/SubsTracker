@@ -22,6 +22,8 @@ kotlin {
             implementation(libs.androidx.core.ktx)
             implementation(project.dependencies.platform(libs.androidx.compose.bom))
             implementation(libs.androidx.compose.material3)
+            implementation(libs.androidx.compose.material.icons.extended)
+            implementation(libs.androidx.compose.ui.text.google.fonts)
         }
         commonMain.dependencies {
             implementation(compose.runtime)

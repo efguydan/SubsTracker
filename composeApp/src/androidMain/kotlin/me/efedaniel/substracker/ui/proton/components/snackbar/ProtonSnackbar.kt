@@ -24,7 +24,7 @@ fun ProtonSnackbar(
         modifier =modifier,
         actionOnNewLine = actionOnNewLine,
         shape =shape,
-        containerColor = ProtonTheme.colors.red,
+        containerColor = ProtonTheme.colors.error,
         contentColor = ProtonTheme.colors.white,
         actionColor = actionColor,
         actionContentColor = actionContentColor,

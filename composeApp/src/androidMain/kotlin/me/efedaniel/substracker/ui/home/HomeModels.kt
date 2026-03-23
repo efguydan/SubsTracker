@@ -1,0 +1,75 @@
+package me.efedaniel.substracker.ui.home
+
+data class HomeUiState(
+    val title: String,
+    val averageMonthlySpendLabel: String,
+    val averageMonthlySpendValue: String,
+    val deltaPercent: String,
+    val insightTitle: String,
+    val timelineTitle: String,
+    val sections: List<TimelineMonthSection>
+)
+
+data class TimelineMonthSection(
+    val label: String,
+    val items: List<TimelineItem>
+)
+
+data class TimelineItem(
+    val name: String,
+    val subtitle: String,
+    val amount: String,
+    val dueLabel: String
+)
+
+enum class HomeTab {
+    Timeline,
+    Insights,
+    Subscriptions,
+    Settings
+}
+
+val sampleHomeState = HomeUiState(
+    title = "Lighter",
+    averageMonthlySpendLabel = "AVERAGE MONTHLY SPEND",
+    averageMonthlySpendValue = "$482.50",
+    deltaPercent = "+4%",
+    insightTitle = "Cash Burn Insight",
+    timelineTitle = "Upcoming Timeline",
+    sections = listOf(
+        TimelineMonthSection(
+            label = "THIS WEEK",
+            items = listOf(
+                TimelineItem(
+                    name = "Spotify Family",
+                    subtitle = "Entertainment • Premium Plan",
+                    amount = "$16.99",
+                    dueLabel = "DUE JUN 14"
+                ),
+                TimelineItem(
+                    name = "Netflix 4K",
+                    subtitle = "Entertainment • Shared Account",
+                    amount = "$22.99",
+                    dueLabel = "DUE JUN 15"
+                )
+            )
+        ),
+        TimelineMonthSection(
+            label = "NEXT WEEK",
+            items = listOf(
+                TimelineItem(
+                    name = "Adobe Creative Cloud",
+                    subtitle = "Work • Annual Prepaid",
+                    amount = "$54.99",
+                    dueLabel = "DUE JUN 21"
+                ),
+                TimelineItem(
+                    name = "Midjourney Pro",
+                    subtitle = "Creative • AI Imaging",
+                    amount = "$30.00",
+                    dueLabel = "DUE JUN 24"
+                )
+            )
+        )
+    )
+)

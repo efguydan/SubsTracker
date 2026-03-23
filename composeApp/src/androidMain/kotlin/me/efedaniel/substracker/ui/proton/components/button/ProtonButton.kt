@@ -55,10 +55,10 @@ fun ProtonButton(
         enabled = enabled && isLoading.not(),
         shape = getShapeForType(type = type),
         colors = ButtonDefaults.buttonColors(
-            containerColor = colors.black,
+            containerColor = colors.primary,
             contentColor = colors.white,
-            disabledContainerColor = colors.black,
-            disabledContentColor = colors.white,
+            disabledContainerColor = colors.primary.copy(alpha = 0.4f),
+            disabledContentColor = colors.white.copy(alpha = 0.7f),
         ),
         elevation = elevation,
         border = border,

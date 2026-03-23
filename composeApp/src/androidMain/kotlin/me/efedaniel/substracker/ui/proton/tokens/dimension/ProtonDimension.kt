@@ -94,5 +94,11 @@ object ProtonDimension {
     @Stable
     val Corner8 = 8.dp
 
+    @Stable
+    val Corner12 = 12.dp
+
+    @Stable
+    val Corner16 = 16.dp
+
     // endregion
 }
