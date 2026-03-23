@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import me.efedaniel.substracker.ui.home.HomeBottomBar
 import me.efedaniel.substracker.ui.home.HomeRoute
 import me.efedaniel.substracker.ui.home.HomeTab
+import me.efedaniel.substracker.ui.proton.components.text.ProtonText
 import me.efedaniel.substracker.ui.proton.theme.ProtonTheme
 
 @Composable
@@ -71,7 +72,7 @@ private fun PlaceholderScreen(title: String, modifier: Modifier = Modifier) {
             .fillMaxSize(),
         contentAlignment = androidx.compose.ui.Alignment.Center
     ) {
-        androidx.compose.material3.Text(
+        ProtonText(
             text = title,
             style = androidx.compose.material3.MaterialTheme.typography.headlineMedium,
             color = ProtonTheme.colors.onSurface

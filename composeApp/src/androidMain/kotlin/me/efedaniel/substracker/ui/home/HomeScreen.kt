@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import me.efedaniel.substracker.ui.proton.components.text.ProtonText
 import me.efedaniel.substracker.ui.proton.theme.ProtonTheme
 
 @Composable
@@ -65,7 +65,7 @@ private fun HomeTimelineContent(
     ) {
         item {
             Spacer(modifier = Modifier.height(12.dp))
-            Text(
+            ProtonText(
                 text = state.title,
                 style = androidx.compose.material3.MaterialTheme.typography.headlineMedium,
                 color = colors.onSurface
@@ -82,7 +82,7 @@ private fun HomeTimelineContent(
             InsightCard(title = state.insightTitle)
         }
         item {
-            Text(
+            ProtonText(
                 text = state.timelineTitle,
                 style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
                 color = colors.onSurface
@@ -90,7 +90,7 @@ private fun HomeTimelineContent(
         }
         state.sections.forEach { section ->
             item {
-                Text(
+                ProtonText(
                     text = section.label,
                     style = androidx.compose.material3.MaterialTheme.typography.labelMedium,
                     color = colors.onSurface.copy(alpha = 0.6f)
@@ -113,7 +113,7 @@ private fun HeroSpendCard(
 ) {
     val colors = ProtonTheme.colors
     Column(modifier = modifier) {
-        Text(
+        ProtonText(
             text = label,
             style = androidx.compose.material3.MaterialTheme.typography.labelMedium,
             color = colors.onSurface.copy(alpha = 0.6f)
@@ -124,7 +124,7 @@ private fun HeroSpendCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(
+            ProtonText(
                 text = value,
                 style = androidx.compose.material3.MaterialTheme.typography.displayLarge,
                 color = colors.primary
@@ -146,11 +146,12 @@ private fun DeltaChip(
             .background(colors.secondary.copy(alpha = 0.15f))
             .padding(horizontal = 10.dp, vertical = 6.dp)
     ) {
-        Text(
+        ProtonText(
             text = text,
-            style = androidx.compose.material3.MaterialTheme.typography.labelMedium,
-            color = colors.secondary,
-            fontWeight = FontWeight.SemiBold
+            style = androidx.compose.material3.MaterialTheme.typography.labelMedium.copy(
+                fontWeight = FontWeight.SemiBold
+            ),
+            color = colors.secondary
         )
     }
 }
@@ -168,7 +169,7 @@ private fun InsightCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(
+            ProtonText(
                 text = title,
                 style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
                 color = colors.onSurface
@@ -185,7 +186,7 @@ private fun InsightCard(
                 InsightBar(height = 72.dp, color = colors.secondary)
             }
             Spacer(modifier = Modifier.height(12.dp))
-            Text(
+            ProtonText(
                 text = "ACTIVE VS TRIAL PERIODS",
                 style = androidx.compose.material3.MaterialTheme.typography.labelMedium,
                 color = colors.onSurface.copy(alpha = 0.6f)
@@ -233,7 +234,7 @@ private fun TimelineRow(
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Text(
+                ProtonText(
                     text = item.name,
                     style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
                     color = colors.onSurface,
@@ -241,20 +242,20 @@ private fun TimelineRow(
                     overflow = TextOverflow.Ellipsis
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(
+                ProtonText(
                     text = item.subtitle,
                     style = androidx.compose.material3.MaterialTheme.typography.bodyMedium,
                     color = colors.onSurface.copy(alpha = 0.6f)
                 )
             }
             Column(horizontalAlignment = Alignment.End) {
-                Text(
+                ProtonText(
                     text = item.amount,
                     style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
                     color = colors.onSurface
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(
+                ProtonText(
                     text = item.dueLabel,
                     style = androidx.compose.material3.MaterialTheme.typography.labelMedium,
                     color = colors.onSurface.copy(alpha = 0.6f)
