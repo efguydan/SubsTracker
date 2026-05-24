@@ -36,29 +36,31 @@ private val BottomBarHeight = 64.dp
 fun HomeBottomBar(
     selectedTab: HomeTab,
     onTabSelected: (HomeTab) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val colors = ProtonTheme.colors
     Surface(
         modifier = modifier.fillMaxWidth(),
-        color = colors.surfaceContainerLowest
+        color = colors.surfaceContainerLowest,
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .windowInsetsPadding(WindowInsets.navigationBars)
-                .height(BottomBarHeight),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .windowInsetsPadding(WindowInsets.navigationBars)
+                    .height(BottomBarHeight),
+            horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             HomeTab.entries.forEach { tab ->
                 HomeTabItem(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
                     icon = tab.icon,
                     label = tab.label,
                     selected = selectedTab == tab,
-                    onClick = { onTabSelected(tab) }
+                    onClick = { onTabSelected(tab) },
                 )
             }
         }
@@ -71,44 +73,47 @@ private fun HomeTabItem(
     label: String,
     selected: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val colors = ProtonTheme.colors
     val tint = if (selected) colors.primary else colors.onSurface.copy(alpha = 0.6f)
     Column(
-        modifier = modifier
-            .selectable(
-                selected = selected,
-                role = Role.Tab,
-                onClick = onClick
-            )
-            .heightIn(min = ProtonDimension.ComponentSize48)
-            .padding(horizontal = ProtonDimension.Spacing8, vertical = ProtonDimension.Spacing4),
+        modifier =
+            modifier
+                .selectable(
+                    selected = selected,
+                    role = Role.Tab,
+                    onClick = onClick,
+                )
+                .heightIn(min = ProtonDimension.ComponentSize48)
+                .padding(horizontal = ProtonDimension.Spacing8, vertical = ProtonDimension.Spacing4),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Icon(imageVector = icon, contentDescription = null, tint = tint)
         Spacer(modifier = Modifier.height(ProtonDimension.Spacing2))
         ProtonText(
             text = label,
             color = tint,
-            style = ProtonTheme.typography.labelMedium
+            style = ProtonTheme.typography.labelMedium,
         )
     }
 }
 
 private val HomeTab.icon: ImageVector
-    get() = when (this) {
-        HomeTab.Timeline -> Icons.Outlined.Timeline
-        HomeTab.Insights -> Icons.Outlined.Insights
-        HomeTab.Subscriptions -> Icons.Outlined.Subscriptions
-        HomeTab.Settings -> Icons.Outlined.Settings
-    }
+    get() =
+        when (this) {
+            HomeTab.Timeline -> Icons.Outlined.Timeline
+            HomeTab.Insights -> Icons.Outlined.Insights
+            HomeTab.Subscriptions -> Icons.Outlined.Subscriptions
+            HomeTab.Settings -> Icons.Outlined.Settings
+        }
 
 private val HomeTab.label: String
-    get() = when (this) {
-        HomeTab.Timeline -> "Timeline"
-        HomeTab.Insights -> "Insights"
-        HomeTab.Subscriptions -> "Subscriptions"
-        HomeTab.Settings -> "Settings"
-    }
+    get() =
+        when (this) {
+            HomeTab.Timeline -> "Timeline"
+            HomeTab.Insights -> "Insights"
+            HomeTab.Subscriptions -> "Subscriptions"
+            HomeTab.Settings -> "Settings"
+        }

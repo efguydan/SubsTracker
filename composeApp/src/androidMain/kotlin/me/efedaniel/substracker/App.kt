@@ -48,7 +48,7 @@ private fun RootScaffold(modifier: Modifier = Modifier) {
         bottomBar = {
             HomeBottomBar(
                 selectedTab = selectedTab,
-                onTabSelected = { selectedTab = it }
+                onTabSelected = { selectedTab = it },
             )
         },
         floatingActionButton = {
@@ -57,18 +57,19 @@ private fun RootScaffold(modifier: Modifier = Modifier) {
                     onClick = {},
                     containerColor = colors.secondary,
                     contentColor = colors.white,
-                    elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 6.dp)
+                    elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 6.dp),
                 ) {
                     Icon(imageVector = Icons.Outlined.Add, contentDescription = "Add")
                 }
             }
-        }
+        },
     ) { padding ->
         when (selectedTab) {
             HomeTab.Timeline -> HomeRoute(modifier = Modifier.padding(padding))
             HomeTab.Insights,
             HomeTab.Subscriptions,
-            HomeTab.Settings -> PlaceholderScreen(modifier = Modifier.padding(padding))
+            HomeTab.Settings,
+            -> PlaceholderScreen(modifier = Modifier.padding(padding))
         }
     }
 }
@@ -77,20 +78,21 @@ private fun RootScaffold(modifier: Modifier = Modifier) {
 private fun PlaceholderScreen(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         ProtonText(
             text = "Coming soon",
             style = ProtonTheme.typography.bodyMedium,
-            color = ProtonTheme.colors.onSurface.copy(alpha = 0.6f)
+            color = ProtonTheme.colors.onSurface.copy(alpha = 0.6f),
         )
     }
 }
 
 private val HomeTab.toolbarTitle: String
-    get() = when (this) {
-        HomeTab.Timeline -> "Lighter"
-        HomeTab.Insights -> "Insights"
-        HomeTab.Subscriptions -> "Subscriptions"
-        HomeTab.Settings -> "Settings"
-    }
+    get() =
+        when (this) {
+            HomeTab.Timeline -> "Lighter"
+            HomeTab.Insights -> "Insights"
+            HomeTab.Subscriptions -> "Subscriptions"
+            HomeTab.Settings -> "Settings"
+        }

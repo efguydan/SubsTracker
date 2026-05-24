@@ -38,47 +38,49 @@ import me.efedaniel.substracker.ui.proton.tokens.dimension.ProtonDimension
 fun HomeRoute(modifier: Modifier = Modifier) {
     HomeScreen(
         state = sampleHomeState,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
 @Composable
 fun HomeScreen(
     state: HomeUiState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val colors = ProtonTheme.colors
     val typography = ProtonTheme.typography
     LazyColumn(
-        modifier = modifier
-            .background(colors.surface)
-            .fillMaxSize(),
-        contentPadding = PaddingValues(
-            top = ProtonDimension.Spacing16,
-            bottom = ProtonDimension.Spacing24,
-            start = ProtonDimension.Spacing20,
-            end = ProtonDimension.Spacing20
-        ),
-        verticalArrangement = Arrangement.spacedBy(ProtonDimension.Spacing16)
+        modifier =
+            modifier
+                .background(colors.surface)
+                .fillMaxSize(),
+        contentPadding =
+            PaddingValues(
+                top = ProtonDimension.Spacing16,
+                bottom = ProtonDimension.Spacing24,
+                start = ProtonDimension.Spacing20,
+                end = ProtonDimension.Spacing20,
+            ),
+        verticalArrangement = Arrangement.spacedBy(ProtonDimension.Spacing16),
     ) {
         item {
             HeroSpendCard(
                 label = state.averageMonthlySpendLabel,
                 value = state.averageMonthlySpendValue,
-                delta = state.deltaPercent
+                delta = state.deltaPercent,
             )
         }
         item {
             InsightCard(
                 title = state.insightTitle,
-                caption = state.insightCaption
+                caption = state.insightCaption,
             )
         }
         item {
             ProtonText(
                 text = state.timelineTitle,
                 style = typography.titleMedium,
-                color = colors.onSurface
+                color = colors.onSurface,
             )
         }
         state.sections.forEach { section ->
@@ -86,7 +88,7 @@ fun HomeScreen(
                 ProtonText(
                     text = section.label,
                     style = typography.labelMedium,
-                    color = colors.onSurface.copy(alpha = 0.6f)
+                    color = colors.onSurface.copy(alpha = 0.6f),
                 )
             }
             items(section.items, key = { it.id }) { item ->
@@ -101,7 +103,7 @@ private fun HeroSpendCard(
     label: String,
     value: String,
     delta: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val colors = ProtonTheme.colors
     val typography = ProtonTheme.typography
@@ -109,18 +111,18 @@ private fun HeroSpendCard(
         ProtonText(
             text = label,
             style = typography.labelMedium,
-            color = colors.onSurface.copy(alpha = 0.6f)
+            color = colors.onSurface.copy(alpha = 0.6f),
         )
         Spacer(modifier = Modifier.height(ProtonDimension.Spacing8))
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             ProtonText(
                 text = value,
                 style = typography.displayLarge,
-                color = colors.primary
+                color = colors.primary,
             )
             DeltaChip(text = delta)
         }
@@ -130,19 +132,20 @@ private fun HeroSpendCard(
 @Composable
 private fun DeltaChip(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val colors = ProtonTheme.colors
     Box(
-        modifier = modifier
-            .clip(CircleShape)
-            .background(colors.secondary.copy(alpha = 0.15f))
-            .padding(horizontal = 10.dp, vertical = 6.dp)
+        modifier =
+            modifier
+                .clip(CircleShape)
+                .background(colors.secondary.copy(alpha = 0.15f))
+                .padding(horizontal = 10.dp, vertical = 6.dp),
     ) {
         ProtonText(
             text = text,
             style = ProtonTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
-            color = colors.secondary
+            color = colors.secondary,
         )
     }
 }
@@ -151,7 +154,7 @@ private fun DeltaChip(
 private fun InsightCard(
     title: String,
     caption: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val colors = ProtonTheme.colors
     val typography = ProtonTheme.typography
@@ -159,19 +162,19 @@ private fun InsightCard(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = colors.surfaceContainerLowest),
         shape = RoundedCornerShape(ProtonDimension.Corner16),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Column(modifier = Modifier.padding(ProtonDimension.Spacing16)) {
             ProtonText(
                 text = title,
                 style = typography.titleMedium,
-                color = colors.onSurface
+                color = colors.onSurface,
             )
             Spacer(modifier = Modifier.height(ProtonDimension.Spacing16))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Bottom
+                verticalAlignment = Alignment.Bottom,
             ) {
                 InsightBar(height = 48.dp, color = colors.primary)
                 InsightBar(height = 64.dp, color = colors.primary.copy(alpha = 0.9f))
@@ -182,7 +185,7 @@ private fun InsightCard(
             ProtonText(
                 text = caption,
                 style = typography.labelMedium,
-                color = colors.onSurface.copy(alpha = 0.6f)
+                color = colors.onSurface.copy(alpha = 0.6f),
             )
         }
     }
@@ -192,38 +195,40 @@ private fun InsightCard(
 private fun InsightBar(
     height: Dp,
     color: Color,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .width(48.dp)
-            .height(height)
-            .clip(RoundedCornerShape(10.dp))
-            .background(color)
+        modifier =
+            modifier
+                .width(48.dp)
+                .height(height)
+                .clip(RoundedCornerShape(10.dp))
+                .background(color),
     )
 }
 
 @Composable
 private fun TimelineRow(
     item: TimelineItem,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val colors = ProtonTheme.colors
     val typography = ProtonTheme.typography
     Surface(
         modifier = modifier.fillMaxWidth(),
         color = colors.surfaceContainerLowest,
-        shape = RoundedCornerShape(ProtonDimension.Corner16)
+        shape = RoundedCornerShape(ProtonDimension.Corner16),
     ) {
         Row(
             modifier = Modifier.padding(ProtonDimension.Spacing12),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(ProtonDimension.Corner12))
-                    .background(colors.surfaceContainerLow)
+                modifier =
+                    Modifier
+                        .size(40.dp)
+                        .clip(RoundedCornerShape(ProtonDimension.Corner12))
+                        .background(colors.surfaceContainerLow),
             )
             Spacer(modifier = Modifier.width(ProtonDimension.Spacing12))
             Column(modifier = Modifier.weight(1f)) {
@@ -232,26 +237,26 @@ private fun TimelineRow(
                     style = typography.titleMedium,
                     color = colors.onSurface,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
                 Spacer(modifier = Modifier.height(ProtonDimension.Spacing4))
                 ProtonText(
                     text = item.subtitle,
                     style = typography.bodyMedium,
-                    color = colors.onSurface.copy(alpha = 0.6f)
+                    color = colors.onSurface.copy(alpha = 0.6f),
                 )
             }
             Column(horizontalAlignment = Alignment.End) {
                 ProtonText(
                     text = item.amount,
                     style = typography.titleMedium,
-                    color = colors.onSurface
+                    color = colors.onSurface,
                 )
                 Spacer(modifier = Modifier.height(ProtonDimension.Spacing4))
                 ProtonText(
                     text = item.dueLabel,
                     style = typography.labelMedium,
-                    color = colors.onSurface.copy(alpha = 0.6f)
+                    color = colors.onSurface.copy(alpha = 0.6f),
                 )
             }
         }

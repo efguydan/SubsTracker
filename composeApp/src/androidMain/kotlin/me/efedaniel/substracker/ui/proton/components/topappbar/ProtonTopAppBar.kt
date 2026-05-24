@@ -39,10 +39,11 @@ fun ProtonTopAppBar(
 object ProtonTopAppBarDefaults {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun colors(): TopAppBarColors = TopAppBarDefaults.topAppBarColors(
-        containerColor = ProtonTheme.colors.surface,
-        titleContentColor = ProtonTheme.colors.onSurface,
-        navigationIconContentColor = ProtonTheme.colors.onSurface,
-        actionIconContentColor = ProtonTheme.colors.onSurface,
-    )
+    fun colors(): TopAppBarColors =
+        TopAppBarDefaults.topAppBarColors(
+            containerColor = ProtonTheme.colors.surface,
+            titleContentColor = ProtonTheme.colors.onSurface,
+            navigationIconContentColor = ProtonTheme.colors.onSurface,
+            actionIconContentColor = ProtonTheme.colors.onSurface,
+        )
 }

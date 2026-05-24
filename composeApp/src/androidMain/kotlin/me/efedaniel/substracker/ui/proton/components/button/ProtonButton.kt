@@ -49,17 +49,19 @@ fun ProtonButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
-            .conditional(fillMaxWidth) { fillMaxWidth() }
-            .requiredHeight(getHeightForSize(size)),
+        modifier =
+            modifier
+                .conditional(fillMaxWidth) { fillMaxWidth() }
+                .requiredHeight(getHeightForSize(size)),
         enabled = enabled && isLoading.not(),
         shape = getShapeForType(type = type),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = colors.primary,
-            contentColor = colors.white,
-            disabledContainerColor = colors.primary.copy(alpha = 0.4f),
-            disabledContentColor = colors.white.copy(alpha = 0.7f),
-        ),
+        colors =
+            ButtonDefaults.buttonColors(
+                containerColor = colors.primary,
+                contentColor = colors.white,
+                disabledContainerColor = colors.primary.copy(alpha = 0.4f),
+                disabledContentColor = colors.white.copy(alpha = 0.7f),
+            ),
         elevation = elevation,
         border = border,
         contentPadding = contentPadding,
@@ -73,20 +75,22 @@ fun ProtonButton(
                     exit = fadeOut(),
                 ) {
                     CircularProgressIndicator(
-                        modifier = Modifier.requiredSize(
-                            ProtonDimension.ComponentSize28,
-                        ),
+                        modifier =
+                            Modifier.requiredSize(
+                                ProtonDimension.ComponentSize28,
+                            ),
                         color = colors.white,
-                        strokeWidth = ProtonDimension.Stroke2
+                        strokeWidth = ProtonDimension.Stroke2,
                     )
                 }
 
                 ProtonIcon(
                     asset = icon,
                     tint = iconTint,
-                    modifier = Modifier
-                        .padding(all = ProtonDimension.Spacing2)
-                        .align(Alignment.Center)
+                    modifier =
+                        Modifier
+                            .padding(all = ProtonDimension.Spacing2)
+                            .align(Alignment.Center),
                 )
             }
             Spacer(modifier = Modifier.width(ProtonDimension.Spacing4))

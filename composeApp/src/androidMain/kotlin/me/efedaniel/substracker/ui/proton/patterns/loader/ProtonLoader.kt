@@ -15,11 +15,11 @@ fun ProtonLoader(
     isFullScreen: Boolean = true,
 ) {
     Box(
-        modifier = Modifier
-            .conditional(isFullScreen) { fillMaxSize() },
+        modifier =
+            Modifier
+                .conditional(isFullScreen) { fillMaxSize() },
         contentAlignment = Alignment.Center,
     ) {
         CircularProgressIndicator(color = ProtonTheme.colors.white)
     }
-
 }

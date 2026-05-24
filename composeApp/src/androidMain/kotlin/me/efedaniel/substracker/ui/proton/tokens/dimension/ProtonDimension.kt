@@ -5,7 +5,6 @@ import androidx.compose.ui.unit.dp
 
 @Stable
 object ProtonDimension {
-
     // region Component Size
 
     @Stable

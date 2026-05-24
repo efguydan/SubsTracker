@@ -18,32 +18,34 @@ data class ProtonColorPalette(
     val transparent: Color,
 ) {
     companion object {
-        fun light() = ProtonColorPalette(
-            primary = ProtonColor.Primary,
-            primaryContainer = ProtonColor.PrimaryContainer,
-            secondary = ProtonColor.Secondary,
-            tertiary = ProtonColor.Tertiary,
-            surface = ProtonColor.Surface,
-            surfaceContainerLow = ProtonColor.SurfaceContainerLow,
-            surfaceContainerLowest = ProtonColor.SurfaceContainerLowest,
-            onSurface = ProtonColor.OnSurface,
-            error = ProtonColor.Error,
-            white = ProtonColor.White,
-            transparent = ProtonColor.Transparent,
-        )
+        fun light() =
+            ProtonColorPalette(
+                primary = ProtonColor.Primary,
+                primaryContainer = ProtonColor.PrimaryContainer,
+                secondary = ProtonColor.Secondary,
+                tertiary = ProtonColor.Tertiary,
+                surface = ProtonColor.Surface,
+                surfaceContainerLow = ProtonColor.SurfaceContainerLow,
+                surfaceContainerLowest = ProtonColor.SurfaceContainerLowest,
+                onSurface = ProtonColor.OnSurface,
+                error = ProtonColor.Error,
+                white = ProtonColor.White,
+                transparent = ProtonColor.Transparent,
+            )
 
-        fun dark() = ProtonColorPalette(
-            primary = ProtonColor.Primary,
-            primaryContainer = ProtonColor.PrimaryContainer,
-            secondary = ProtonColor.Secondary,
-            tertiary = ProtonColor.Tertiary,
-            surface = ProtonColor.OnSurface,
-            surfaceContainerLow = ProtonColor.SurfaceContainerLowDark,
-            surfaceContainerLowest = ProtonColor.SurfaceContainerLowestDark,
-            onSurface = ProtonColor.White,
-            error = ProtonColor.Error,
-            white = ProtonColor.White,
-            transparent = ProtonColor.Transparent,
-        )
+        fun dark() =
+            ProtonColorPalette(
+                primary = ProtonColor.Primary,
+                primaryContainer = ProtonColor.PrimaryContainer,
+                secondary = ProtonColor.Secondary,
+                tertiary = ProtonColor.Tertiary,
+                surface = ProtonColor.OnSurface,
+                surfaceContainerLow = ProtonColor.SurfaceContainerLowDark,
+                surfaceContainerLowest = ProtonColor.SurfaceContainerLowestDark,
+                onSurface = ProtonColor.White,
+                error = ProtonColor.Error,
+                white = ProtonColor.White,
+                transparent = ProtonColor.Transparent,
+            )
     }
 }
