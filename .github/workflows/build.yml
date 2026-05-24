@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - feature/homepage-ui
   pull_request:
     branches:
       - develop
