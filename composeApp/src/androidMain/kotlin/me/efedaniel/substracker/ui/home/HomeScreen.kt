@@ -89,7 +89,7 @@ fun HomeScreen(
                     color = colors.onSurface.copy(alpha = 0.6f)
                 )
             }
-            items(section.items, key = { it.name }) { item ->
+            items(section.items, key = { it.id }) { item ->
                 TimelineRow(item = item)
             }
         }
