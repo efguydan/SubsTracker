@@ -14,7 +14,7 @@ suspend fun SnackbarHostState.showSnackbarNow(
     actionLabel: String? = null,
     withDismissAction: Boolean = false,
     duration: SnackbarDuration =
-        if (actionLabel == null) SnackbarDuration.Short else SnackbarDuration.Indefinite
+        if (actionLabel == null) SnackbarDuration.Short else SnackbarDuration.Indefinite,
 ): SnackbarResult {
     currentSnackbarData?.dismiss()
     return showSnackbar(

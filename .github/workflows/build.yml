@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - feature/homepage-ui
   pull_request:
     branches:
       - develop
@@ -19,6 +20,8 @@ jobs:
           java-version: "17"
           cache: gradle
       - uses: android-actions/setup-android@v3
+      - name: Check formatting
+        run: ./gradlew spotlessCheck
       - name: Build Android app
         run: ./gradlew :composeApp:assembleDebug
   build-ios:

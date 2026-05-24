@@ -5,7 +5,6 @@ import androidx.compose.ui.unit.dp
 
 @Stable
 object ProtonDimension {
-
     // region Component Size
 
     @Stable
@@ -60,7 +59,13 @@ object ProtonDimension {
     val Spacing8 = 8.dp
 
     @Stable
+    val Spacing12 = 12.dp
+
+    @Stable
     val Spacing16 = 16.dp
+
+    @Stable
+    val Spacing20 = 20.dp
 
     @Stable
     val Spacing24 = 24.dp
@@ -93,6 +98,12 @@ object ProtonDimension {
 
     @Stable
     val Corner8 = 8.dp
+
+    @Stable
+    val Corner12 = 12.dp
+
+    @Stable
+    val Corner16 = 16.dp
 
     // endregion
 }

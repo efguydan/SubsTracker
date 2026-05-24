@@ -21,10 +21,10 @@ fun ProtonSnackbar(
 ) {
     Snackbar(
         snackbarData = snackbarData,
-        modifier =modifier,
+        modifier = modifier,
         actionOnNewLine = actionOnNewLine,
-        shape =shape,
-        containerColor = ProtonTheme.colors.red,
+        shape = shape,
+        containerColor = ProtonTheme.colors.error,
         contentColor = ProtonTheme.colors.white,
         actionColor = actionColor,
         actionContentColor = actionContentColor,

@@ -19,45 +19,68 @@ import me.efedaniel.substracker.ui.proton.tokens.color.ProtonColor
 import me.efedaniel.substracker.ui.proton.tokens.color.ProtonColorPalette
 import me.efedaniel.substracker.ui.proton.tokens.typography.ProtonTypographySystem
 
-private val DarkColorScheme = darkColorScheme(
-    primary = ProtonColor.Black,
-    onPrimary = ProtonColor.White,
-    secondary = ProtonColor.Green,
-    onSecondary = ProtonColor.Black,
-    tertiary = ProtonColor.White,
-    onTertiary = ProtonColor.Black,
-    background = ProtonColor.Black,
-    onBackground = ProtonColor.White,
-    surface = ProtonColor.Black,
-    onSurface = ProtonColor.White,
-    error = ProtonColor.Red,
-    onError = ProtonColor.White
-)
+private val DarkColorScheme =
+    darkColorScheme(
+        primary = ProtonColor.Primary,
+        onPrimary = ProtonColor.White,
+        primaryContainer = ProtonColor.PrimaryContainer,
+        onPrimaryContainer = ProtonColor.White,
+        secondary = ProtonColor.Secondary,
+        onSecondary = ProtonColor.White,
+        tertiary = ProtonColor.Tertiary,
+        onTertiary = ProtonColor.White,
+        background = ProtonColor.OnSurface,
+        onBackground = ProtonColor.White,
+        surface = ProtonColor.OnSurface,
+        onSurface = ProtonColor.White,
+        surfaceContainerLow = ProtonColor.SurfaceContainerLowDark,
+        surfaceContainerLowest = ProtonColor.SurfaceContainerLowestDark,
+        error = ProtonColor.Error,
+        onError = ProtonColor.White,
+    )
 
-private val LightColorScheme = lightColorScheme()
+private val LightColorScheme =
+    lightColorScheme(
+        primary = ProtonColor.Primary,
+        onPrimary = ProtonColor.White,
+        primaryContainer = ProtonColor.PrimaryContainer,
+        onPrimaryContainer = ProtonColor.White,
+        secondary = ProtonColor.Secondary,
+        onSecondary = ProtonColor.White,
+        tertiary = ProtonColor.Tertiary,
+        onTertiary = ProtonColor.White,
+        background = ProtonColor.Surface,
+        onBackground = ProtonColor.OnSurface,
+        surface = ProtonColor.Surface,
+        onSurface = ProtonColor.OnSurface,
+        surfaceContainerLow = ProtonColor.SurfaceContainerLow,
+        surfaceContainerLowest = ProtonColor.SurfaceContainerLowest,
+        error = ProtonColor.Error,
+        onError = ProtonColor.White,
+    )
 
-val LocalProtonColorPalette = staticCompositionLocalOf { ProtonColorPalette() }
+val LocalProtonColorPalette = staticCompositionLocalOf { ProtonColorPalette.light() }
 
 val LocalProtonTypographySystem = staticCompositionLocalOf { ProtonTypographySystem }
 
-
 @Composable
 fun ProtonTheme(
-    darkTheme: Boolean = true,
+    darkTheme: Boolean = false,
     lightStatusBarColors: Boolean = true,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false, // Fixme: Do we want this on?
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val colorScheme =
+        when {
+            dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+                val context = LocalContext.current
+                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
+            darkTheme -> DarkColorScheme
+            else -> LightColorScheme
+        }
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -67,18 +90,17 @@ fun ProtonTheme(
         }
     }
 
-    val colorPalette = ProtonColorPalette()
+    val colorPalette = if (darkTheme) ProtonColorPalette.dark() else ProtonColorPalette.light()
     val typography = ProtonTypographySystem
-
 
     CompositionLocalProvider(
         LocalProtonColorPalette provides colorPalette,
-        LocalProtonTypographySystem provides typography
+        LocalProtonTypographySystem provides typography,
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = typography,
-            content = content
+            content = content,
         )
     }
 }
