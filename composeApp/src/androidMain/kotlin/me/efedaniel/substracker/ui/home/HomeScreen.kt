@@ -62,13 +62,6 @@ fun HomeScreen(
         verticalArrangement = Arrangement.spacedBy(ProtonDimension.Spacing16)
     ) {
         item {
-            ProtonText(
-                text = state.title,
-                style = typography.headlineMedium,
-                color = colors.onSurface
-            )
-        }
-        item {
             HeroSpendCard(
                 label = state.averageMonthlySpendLabel,
                 value = state.averageMonthlySpendValue,

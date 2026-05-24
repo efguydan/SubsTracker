@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -22,6 +23,7 @@ import me.efedaniel.substracker.ui.home.HomeBottomBar
 import me.efedaniel.substracker.ui.home.HomeRoute
 import me.efedaniel.substracker.ui.home.HomeTab
 import me.efedaniel.substracker.ui.proton.components.text.ProtonText
+import me.efedaniel.substracker.ui.proton.components.topappbar.ProtonTopAppBar
 import me.efedaniel.substracker.ui.proton.theme.ProtonTheme
 
 @Composable
@@ -32,6 +34,7 @@ fun App() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RootScaffold(modifier: Modifier = Modifier) {
     var selectedTab by remember { mutableStateOf(HomeTab.Timeline) }
@@ -39,6 +42,9 @@ private fun RootScaffold(modifier: Modifier = Modifier) {
     Scaffold(
         modifier = modifier,
         containerColor = colors.surface,
+        topBar = {
+            ProtonTopAppBar(title = selectedTab.toolbarTitle)
+        },
         bottomBar = {
             HomeBottomBar(
                 selectedTab = selectedTab,
@@ -60,23 +66,31 @@ private fun RootScaffold(modifier: Modifier = Modifier) {
     ) { padding ->
         when (selectedTab) {
             HomeTab.Timeline -> HomeRoute(modifier = Modifier.padding(padding))
-            HomeTab.Insights -> PlaceholderScreen(title = "Insights", modifier = Modifier.padding(padding))
-            HomeTab.Subscriptions -> PlaceholderScreen(title = "Subscriptions", modifier = Modifier.padding(padding))
-            HomeTab.Settings -> PlaceholderScreen(title = "Settings", modifier = Modifier.padding(padding))
+            HomeTab.Insights,
+            HomeTab.Subscriptions,
+            HomeTab.Settings -> PlaceholderScreen(modifier = Modifier.padding(padding))
         }
     }
 }
 
 @Composable
-private fun PlaceholderScreen(title: String, modifier: Modifier = Modifier) {
+private fun PlaceholderScreen(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         ProtonText(
-            text = title,
-            style = ProtonTheme.typography.headlineMedium,
-            color = ProtonTheme.colors.onSurface
+            text = "Coming soon",
+            style = ProtonTheme.typography.bodyMedium,
+            color = ProtonTheme.colors.onSurface.copy(alpha = 0.6f)
         )
     }
 }
+
+private val HomeTab.toolbarTitle: String
+    get() = when (this) {
+        HomeTab.Timeline -> "Lighter"
+        HomeTab.Insights -> "Insights"
+        HomeTab.Subscriptions -> "Subscriptions"
+        HomeTab.Settings -> "Settings"
+    }

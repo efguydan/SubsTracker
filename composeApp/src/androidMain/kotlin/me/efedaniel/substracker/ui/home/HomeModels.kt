@@ -1,7 +1,6 @@
 package me.efedaniel.substracker.ui.home
 
 data class HomeUiState(
-    val title: String,
     val averageMonthlySpendLabel: String,
     val averageMonthlySpendValue: String,
     val deltaPercent: String,
@@ -31,7 +30,6 @@ enum class HomeTab {
 }
 
 internal val sampleHomeState = HomeUiState(
-    title = "Lighter",
     averageMonthlySpendLabel = "AVERAGE MONTHLY SPEND",
     averageMonthlySpendValue = "$482.50",
     deltaPercent = "+4%",
