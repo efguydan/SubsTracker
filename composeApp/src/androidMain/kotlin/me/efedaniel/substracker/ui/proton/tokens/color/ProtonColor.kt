@@ -10,6 +10,8 @@ object ProtonColor {
     val Surface = Color(0xFFF7F9FB)
     val SurfaceContainerLow = Color(0xFFF2F4F6)
     val SurfaceContainerLowest = Color(0xFFFFFFFF)
+    val SurfaceContainerLowDark = Color(0xFF22262A)
+    val SurfaceContainerLowestDark = Color(0xFF1A1D20)
     val OnSurface = Color(0xFF191C1E)
     val Error = Color(0xFFBA1A1A)
     val White = Color(0xFFFFFFFF)

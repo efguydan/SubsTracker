@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,12 +24,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.efedaniel.substracker.ui.proton.components.text.ProtonText
 import me.efedaniel.substracker.ui.proton.theme.ProtonTheme
+import me.efedaniel.substracker.ui.proton.tokens.dimension.ProtonDimension
 
 @Composable
 fun HomeRoute(modifier: Modifier = Modifier) {
@@ -44,30 +48,23 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     val colors = ProtonTheme.colors
-    HomeTimelineContent(
-        state = state,
+    val typography = ProtonTheme.typography
+    LazyColumn(
         modifier = modifier
             .background(colors.surface)
-            .fillMaxSize()
-            .padding(top = 8.dp)
-    )
-}
-
-@Composable
-private fun HomeTimelineContent(
-    state: HomeUiState,
-    modifier: Modifier = Modifier
-) {
-    val colors = ProtonTheme.colors
-    LazyColumn(
-        modifier = modifier.padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .fillMaxSize(),
+        contentPadding = PaddingValues(
+            top = ProtonDimension.Spacing16,
+            bottom = ProtonDimension.Spacing24,
+            start = ProtonDimension.Spacing20,
+            end = ProtonDimension.Spacing20
+        ),
+        verticalArrangement = Arrangement.spacedBy(ProtonDimension.Spacing16)
     ) {
         item {
-            Spacer(modifier = Modifier.height(12.dp))
             ProtonText(
                 text = state.title,
-                style = androidx.compose.material3.MaterialTheme.typography.headlineMedium,
+                style = typography.headlineMedium,
                 color = colors.onSurface
             )
         }
@@ -79,12 +76,15 @@ private fun HomeTimelineContent(
             )
         }
         item {
-            InsightCard(title = state.insightTitle)
+            InsightCard(
+                title = state.insightTitle,
+                caption = state.insightCaption
+            )
         }
         item {
             ProtonText(
                 text = state.timelineTitle,
-                style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
+                style = typography.titleMedium,
                 color = colors.onSurface
             )
         }
@@ -92,7 +92,7 @@ private fun HomeTimelineContent(
             item {
                 ProtonText(
                     text = section.label,
-                    style = androidx.compose.material3.MaterialTheme.typography.labelMedium,
+                    style = typography.labelMedium,
                     color = colors.onSurface.copy(alpha = 0.6f)
                 )
             }
@@ -100,7 +100,6 @@ private fun HomeTimelineContent(
                 TimelineRow(item = item)
             }
         }
-        item { Spacer(modifier = Modifier.height(24.dp)) }
     }
 }
 
@@ -112,13 +111,14 @@ private fun HeroSpendCard(
     modifier: Modifier = Modifier
 ) {
     val colors = ProtonTheme.colors
+    val typography = ProtonTheme.typography
     Column(modifier = modifier) {
         ProtonText(
             text = label,
-            style = androidx.compose.material3.MaterialTheme.typography.labelMedium,
+            style = typography.labelMedium,
             color = colors.onSurface.copy(alpha = 0.6f)
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(ProtonDimension.Spacing8))
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -126,7 +126,7 @@ private fun HeroSpendCard(
         ) {
             ProtonText(
                 text = value,
-                style = androidx.compose.material3.MaterialTheme.typography.displayLarge,
+                style = typography.displayLarge,
                 color = colors.primary
             )
             DeltaChip(text = delta)
@@ -148,9 +148,7 @@ private fun DeltaChip(
     ) {
         ProtonText(
             text = text,
-            style = androidx.compose.material3.MaterialTheme.typography.labelMedium.copy(
-                fontWeight = FontWeight.SemiBold
-            ),
+            style = ProtonTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
             color = colors.secondary
         )
     }
@@ -159,22 +157,24 @@ private fun DeltaChip(
 @Composable
 private fun InsightCard(
     title: String,
+    caption: String,
     modifier: Modifier = Modifier
 ) {
     val colors = ProtonTheme.colors
+    val typography = ProtonTheme.typography
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = colors.surfaceContainerLowest),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(ProtonDimension.Corner16),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(ProtonDimension.Spacing16)) {
             ProtonText(
                 text = title,
-                style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
+                style = typography.titleMedium,
                 color = colors.onSurface
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(ProtonDimension.Spacing16))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -185,10 +185,10 @@ private fun InsightCard(
                 InsightBar(height = 52.dp, color = colors.primary.copy(alpha = 0.8f))
                 InsightBar(height = 72.dp, color = colors.secondary)
             }
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(ProtonDimension.Spacing12))
             ProtonText(
-                text = "ACTIVE VS TRIAL PERIODS",
-                style = androidx.compose.material3.MaterialTheme.typography.labelMedium,
+                text = caption,
+                style = typography.labelMedium,
                 color = colors.onSurface.copy(alpha = 0.6f)
             )
         }
@@ -197,11 +197,12 @@ private fun InsightCard(
 
 @Composable
 private fun InsightBar(
-    height: androidx.compose.ui.unit.Dp,
-    color: androidx.compose.ui.graphics.Color
+    height: Dp,
+    color: Color,
+    modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .width(48.dp)
             .height(height)
             .clip(RoundedCornerShape(10.dp))
@@ -215,49 +216,48 @@ private fun TimelineRow(
     modifier: Modifier = Modifier
 ) {
     val colors = ProtonTheme.colors
+    val typography = ProtonTheme.typography
     Surface(
         modifier = modifier.fillMaxWidth(),
         color = colors.surfaceContainerLowest,
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(ProtonDimension.Corner16)
     ) {
         Row(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(ProtonDimension.Spacing12),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
                     .size(40.dp)
-                    .clip(RoundedCornerShape(12.dp))
+                    .clip(RoundedCornerShape(ProtonDimension.Corner12))
                     .background(colors.surfaceContainerLow)
             )
-            Spacer(modifier = Modifier.width(12.dp))
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
+            Spacer(modifier = Modifier.width(ProtonDimension.Spacing12))
+            Column(modifier = Modifier.weight(1f)) {
                 ProtonText(
                     text = item.name,
-                    style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
+                    style = typography.titleMedium,
                     color = colors.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(ProtonDimension.Spacing4))
                 ProtonText(
                     text = item.subtitle,
-                    style = androidx.compose.material3.MaterialTheme.typography.bodyMedium,
+                    style = typography.bodyMedium,
                     color = colors.onSurface.copy(alpha = 0.6f)
                 )
             }
             Column(horizontalAlignment = Alignment.End) {
                 ProtonText(
                     text = item.amount,
-                    style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
+                    style = typography.titleMedium,
                     color = colors.onSurface
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(ProtonDimension.Spacing4))
                 ProtonText(
                     text = item.dueLabel,
-                    style = androidx.compose.material3.MaterialTheme.typography.labelMedium,
+                    style = typography.labelMedium,
                     color = colors.onSurface.copy(alpha = 0.6f)
                 )
             }
@@ -269,8 +269,6 @@ private fun TimelineRow(
 @Composable
 private fun HomePreview() {
     ProtonTheme(darkTheme = false) {
-        HomeScreen(
-            state = sampleHomeState,
-        )
+        HomeScreen(state = sampleHomeState)
     }
 }

@@ -6,6 +6,7 @@ data class HomeUiState(
     val averageMonthlySpendValue: String,
     val deltaPercent: String,
     val insightTitle: String,
+    val insightCaption: String,
     val timelineTitle: String,
     val sections: List<TimelineMonthSection>
 )
@@ -29,12 +30,13 @@ enum class HomeTab {
     Settings
 }
 
-val sampleHomeState = HomeUiState(
+internal val sampleHomeState = HomeUiState(
     title = "Lighter",
     averageMonthlySpendLabel = "AVERAGE MONTHLY SPEND",
     averageMonthlySpendValue = "$482.50",
     deltaPercent = "+4%",
     insightTitle = "Cash Burn Insight",
+    insightCaption = "ACTIVE VS TRIAL PERIODS",
     timelineTitle = "Upcoming Timeline",
     sections = listOf(
         TimelineMonthSection(

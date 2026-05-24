@@ -22,6 +22,8 @@ import me.efedaniel.substracker.ui.proton.tokens.typography.ProtonTypographySyst
 private val DarkColorScheme = darkColorScheme(
     primary = ProtonColor.Primary,
     onPrimary = ProtonColor.White,
+    primaryContainer = ProtonColor.PrimaryContainer,
+    onPrimaryContainer = ProtonColor.White,
     secondary = ProtonColor.Secondary,
     onSecondary = ProtonColor.White,
     tertiary = ProtonColor.Tertiary,
@@ -30,8 +32,8 @@ private val DarkColorScheme = darkColorScheme(
     onBackground = ProtonColor.White,
     surface = ProtonColor.OnSurface,
     onSurface = ProtonColor.White,
-    surfaceContainerLow = ProtonColor.SurfaceContainerLow,
-    surfaceContainerLowest = ProtonColor.SurfaceContainerLowest,
+    surfaceContainerLow = ProtonColor.SurfaceContainerLowDark,
+    surfaceContainerLowest = ProtonColor.SurfaceContainerLowestDark,
     error = ProtonColor.Error,
     onError = ProtonColor.White
 )
@@ -55,7 +57,7 @@ private val LightColorScheme = lightColorScheme(
     onError = ProtonColor.White
 )
 
-val LocalProtonColorPalette = staticCompositionLocalOf { ProtonColorPalette() }
+val LocalProtonColorPalette = staticCompositionLocalOf { ProtonColorPalette.light() }
 
 val LocalProtonTypographySystem = staticCompositionLocalOf { ProtonTypographySystem }
 
@@ -86,7 +88,7 @@ fun ProtonTheme(
         }
     }
 
-    val colorPalette = ProtonColorPalette()
+    val colorPalette = if (darkTheme) ProtonColorPalette.dark() else ProtonColorPalette.light()
     val typography = ProtonTypographySystem
 
 

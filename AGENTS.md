@@ -8,6 +8,7 @@ Guidance for working on this Kotlin Multiplatform (KMP) project.
 - `iosApp/`: iOS app using SwiftUI UI.
 
 ## Architecture expectations
+- **Current state**: screens currently live in `composeApp/androidMain/`. The KMP plan below (shared VMs, use cases, SQLDelight repos) is the target — don't scaffold those layers piecemeal in unrelated PRs.
 - Prefer putting business logic, models, and domain rules in `shared/`.
 - Keep UI state and UI-specific logic in platform apps.
 - Use expect/actual only when truly platform-specific.
@@ -20,6 +21,26 @@ Guidance for working on this Kotlin Multiplatform (KMP) project.
 ## Android (Compose)
 - UI goes in `composeApp/` using Compose.
 - Prefer stateless Composables; use state hoisting where possible.
+
+### Proton design system
+- All UI consumes the Proton system in `composeApp/.../ui/proton/`. Read `ProtonTheme.colors.*` and `ProtonTheme.typography.*` from screens — not `MaterialTheme.colorScheme.*` / `MaterialTheme.typography.*`.
+- Use `ProtonDimension` tokens (`Spacing*`, `Corner*`, `ComponentSize*`) for layout values. If a value isn't a token, add it rather than inline a raw `dp`.
+- Prefer Proton components (`ProtonText`, `ProtonButton`, …) over raw Material counterparts.
+- Light/dark parity: every field on `LightColorScheme` / `ProtonColorPalette.light()` must also be on the dark variants.
+
+### Fonts
+- Use the `GoogleFont` provider (`androidx.compose.ui.text.googlefonts`) with one `Font(...)` per weight. XML `font-family` resources with a bare provider query return weight 400 only — Compose then synthesises bold.
+
+### Scaffold and insets
+- `Scaffold`'s `bottomBar` slot is **not** inset automatically. Custom bottom bars must apply `Modifier.windowInsetsPadding(WindowInsets.navigationBars)`. Prefer M3 `NavigationBar` when the design allows it.
+
+### Accessibility
+- Tab bars use `Modifier.selectable(selected, role = Role.Tab, onClick = ...)`, not `clickable`.
+- Keep clickable surfaces ≥ 48 dp (`heightIn(min = ProtonDimension.ComponentSize48)` or weight-fill the parent).
+- When an icon and text label describe the same action, set `Icon(contentDescription = null)` to avoid TalkBack double-reads.
+
+### Preview data
+- `@Preview` fixtures are `internal` or live in a `PreviewParameterProvider` — never expose preview state on the public API.
 
 ## iOS (SwiftUI)
 - UI goes in `iosApp/` using SwiftUI.

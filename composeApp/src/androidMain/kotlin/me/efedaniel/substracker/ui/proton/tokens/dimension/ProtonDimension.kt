@@ -60,7 +60,13 @@ object ProtonDimension {
     val Spacing8 = 8.dp
 
     @Stable
+    val Spacing12 = 12.dp
+
+    @Stable
     val Spacing16 = 16.dp
+
+    @Stable
+    val Spacing20 = 20.dp
 
     @Stable
     val Spacing24 = 24.dp

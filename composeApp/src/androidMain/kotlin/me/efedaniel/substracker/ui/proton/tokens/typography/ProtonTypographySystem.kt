@@ -2,21 +2,29 @@ package me.efedaniel.substracker.ui.proton.tokens.typography
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.googlefonts.Font
+import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import me.efedaniel.substracker.R
 
-private val manropeFamily = FontFamily(
-    Font(R.font.manrope, weight = FontWeight.Normal),
-    Font(R.font.manrope, weight = FontWeight.SemiBold)
+private val googleFontProvider = GoogleFont.Provider(
+    providerAuthority = "com.google.android.gms.fonts",
+    providerPackage = "com.google.android.gms",
+    certificates = R.array.com_google_android_gms_fonts_certs
 )
+
+private val manropeFamily = FontFamily(
+    Font(GoogleFont("Manrope"), googleFontProvider, FontWeight.Normal),
+    Font(GoogleFont("Manrope"), googleFontProvider, FontWeight.SemiBold)
+)
+
 private val interFamily = FontFamily(
-    Font(R.font.inter, weight = FontWeight.Normal),
-    Font(R.font.inter, weight = FontWeight.Medium),
-    Font(R.font.inter, weight = FontWeight.SemiBold)
+    Font(GoogleFont("Inter"), googleFontProvider, FontWeight.Normal),
+    Font(GoogleFont("Inter"), googleFontProvider, FontWeight.Medium),
+    Font(GoogleFont("Inter"), googleFontProvider, FontWeight.SemiBold)
 )
 
 val ProtonTypographySystem = Typography(

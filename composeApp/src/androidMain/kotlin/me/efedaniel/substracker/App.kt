@@ -1,18 +1,20 @@
 package me.efedaniel.substracker
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -67,14 +69,13 @@ private fun RootScaffold(modifier: Modifier = Modifier) {
 
 @Composable
 private fun PlaceholderScreen(title: String, modifier: Modifier = Modifier) {
-    androidx.compose.foundation.layout.Box(
-        modifier = modifier
-            .fillMaxSize(),
-        contentAlignment = androidx.compose.ui.Alignment.Center
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         ProtonText(
             text = title,
-            style = androidx.compose.material3.MaterialTheme.typography.headlineMedium,
+            style = ProtonTheme.typography.headlineMedium,
             color = ProtonTheme.colors.onSurface
         )
     }
