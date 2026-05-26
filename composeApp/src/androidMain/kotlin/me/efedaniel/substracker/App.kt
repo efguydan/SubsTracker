@@ -19,12 +19,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import me.efedaniel.substracker.ui.home.HomeBottomBar
-import me.efedaniel.substracker.ui.home.HomeRoute
-import me.efedaniel.substracker.ui.home.HomeTab
+import me.efedaniel.substracker.ui.navigation.HomeBottomBar
+import me.efedaniel.substracker.ui.navigation.HomeTab
 import me.efedaniel.substracker.ui.proton.components.text.ProtonText
 import me.efedaniel.substracker.ui.proton.components.topappbar.ProtonTopAppBar
 import me.efedaniel.substracker.ui.proton.theme.ProtonTheme
+import me.efedaniel.substracker.ui.timeline.TimelineRoute
 
 @Composable
 @Preview
@@ -65,7 +65,7 @@ private fun RootScaffold(modifier: Modifier = Modifier) {
         },
     ) { padding ->
         when (selectedTab) {
-            HomeTab.Timeline -> HomeRoute(modifier = Modifier.padding(padding))
+            HomeTab.Timeline -> TimelineRoute(modifier = Modifier.padding(padding))
             HomeTab.Insights,
             HomeTab.Subscriptions,
             HomeTab.Settings,

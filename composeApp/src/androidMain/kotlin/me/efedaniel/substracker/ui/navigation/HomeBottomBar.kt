@@ -1,4 +1,4 @@
-package me.efedaniel.substracker.ui.home
+package me.efedaniel.substracker.ui.navigation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,12 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.unit.dp
 import me.efedaniel.substracker.ui.proton.components.text.ProtonText
 import me.efedaniel.substracker.ui.proton.theme.ProtonTheme
 import me.efedaniel.substracker.ui.proton.tokens.dimension.ProtonDimension
 
-private val BottomBarHeight = 64.dp
+private val BottomBarHeight = ProtonDimension.ComponentSize64
 
 @Composable
 fun HomeBottomBar(

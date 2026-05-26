@@ -1,4 +1,4 @@
-package me.efedaniel.substracker.ui.home
+package me.efedaniel.substracker.ui.timeline
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -35,16 +35,16 @@ import me.efedaniel.substracker.ui.proton.theme.ProtonTheme
 import me.efedaniel.substracker.ui.proton.tokens.dimension.ProtonDimension
 
 @Composable
-fun HomeRoute(modifier: Modifier = Modifier) {
-    HomeScreen(
-        state = sampleHomeState,
+fun TimelineRoute(modifier: Modifier = Modifier) {
+    TimelineScreen(
+        state = sampleTimelineState,
         modifier = modifier,
     )
 }
 
 @Composable
-fun HomeScreen(
-    state: HomeUiState,
+fun TimelineScreen(
+    state: TimelineUiState,
     modifier: Modifier = Modifier,
 ) {
     val colors = ProtonTheme.colors
@@ -265,8 +265,8 @@ private fun TimelineRow(
 
 @Preview
 @Composable
-private fun HomePreview() {
+private fun TimelinePreview() {
     ProtonTheme(darkTheme = false) {
-        HomeScreen(state = sampleHomeState)
+        TimelineScreen(state = sampleTimelineState)
     }
 }

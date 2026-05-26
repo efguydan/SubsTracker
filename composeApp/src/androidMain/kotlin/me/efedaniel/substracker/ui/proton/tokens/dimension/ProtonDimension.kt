@@ -20,6 +20,9 @@ object ProtonDimension {
     val ComponentSize48 = 48.dp
 
     @Stable
+    val ComponentSize64 = 64.dp
+
+    @Stable
     val ComponentSize100 = 100.dp
 
     @Stable
