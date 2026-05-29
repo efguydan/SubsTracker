@@ -1,8 +1,8 @@
-package me.efedaniel.substracker.ui.home
+package me.efedaniel.substracker.ui.timeline
 
 import java.util.UUID
 
-data class HomeUiState(
+data class TimelineUiState(
     val averageMonthlySpendLabel: String,
     val averageMonthlySpendValue: String,
     val deltaPercent: String,
@@ -25,15 +25,8 @@ data class TimelineItem(
     val dueLabel: String,
 )
 
-enum class HomeTab {
-    Timeline,
-    Insights,
-    Subscriptions,
-    Settings,
-}
-
-internal val sampleHomeState =
-    HomeUiState(
+internal val sampleTimelineState =
+    TimelineUiState(
         averageMonthlySpendLabel = "AVERAGE MONTHLY SPEND",
         averageMonthlySpendValue = "$482.50",
         deltaPercent = "+4%",
