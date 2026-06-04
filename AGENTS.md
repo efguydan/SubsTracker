@@ -66,7 +66,7 @@ Guidance for working on this Kotlin Multiplatform (KMP) project.
 - Shared ViewModels (core logic) in `shared/` with optional platform mini ViewModel adapters.
 - Reactive: `Flow` for streams + `suspend` for commands.
 - Storage: SQLDelight in `shared/`.
-- DI: Koin.
+- DI: Metro (compile-time DI, `dev.zacsweers.metro`) — see *Dependency injection* below.
 - UI State: `StateFlow<UiState>` + `UiEvent`.
 - Dispatchers injected (abstracted).
 - Errors: `Result` + `UiEvent` mapping.
@@ -82,9 +82,14 @@ Guidance for working on this Kotlin Multiplatform (KMP) project.
    - VM calls use cases, updates `UiState`, emits `UiEvent`.
    - Repos expose `Flow` for streams + `suspend` for mutations.
  - Dispatchers:
-   - `AppDispatchers` interface in `shared/`.
+   - `AppDispatchers` interface in `shared/` (implemented as `concurrency/AppDispatchers.kt` + per-platform `DefaultAppDispatchers`).
    - Android: `Dispatchers.IO/Default/Main`.
    - iOS: `Dispatchers.Default/Main`.
+ - Dependency injection (Metro):
+   - The Metro compiler plugin is applied to `shared/` only; `composeApp`/`iosApp` consume the graph via plain helper functions: `createAndroidAppGraph(context)` (called from `SubsTrackerApplication`) and `createIosAppGraph()` (exported in the `Shared` framework).
+   - Topology: plain `interface AppGraph` in `commonMain` holds the shared accessors; the concrete `@DependencyGraph(AppScope::class)` interfaces (`AndroidAppGraph`/`IosAppGraph`) live in platform source sets — Metro requires the final graph to be platform-specific so it can see platform bindings.
+   - Convention: data/domain classes stay free of DI annotations. Bindings live in `@ContributesTo(AppScope::class)` provider interfaces under `shared/.../di/` (e.g. `DataProviders`). App-wide singletons use `@SingleIn(AppScope::class)`.
+   - Don't expose raw stdlib types (e.g. `CoroutineContext`) as graph types; map them from `AppDispatchers` inside providers.
  - Error handling:
    - Use cases return `Result`.
    - VM maps failures to `UiEvent.Error` and optional `UiState.error`.

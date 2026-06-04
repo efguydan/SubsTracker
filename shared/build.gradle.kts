@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.metro)
     alias(libs.plugins.sqldelight)
 }
 
@@ -35,6 +36,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.test)
         }
         androidMain.dependencies {
+            implementation(libs.kotlinx.coroutines.android)
             implementation(libs.sqldelight.android.driver)
         }
         iosMain.dependencies {
