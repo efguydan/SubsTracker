@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -23,6 +24,8 @@ kotlin {
             implementation(libs.androidx.compose.material3)
             implementation(libs.androidx.compose.material.icons.extended)
             implementation(libs.androidx.compose.ui.text.google.fonts)
+            implementation(libs.androidx.navigation.compose)
+            implementation(libs.kotlinx.serialization.core)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
