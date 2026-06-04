@@ -1,0 +1,16 @@
+package me.efedaniel.substracker.data.db
+
+import android.content.Context
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+
+actual class DatabaseDriverFactory(
+    private val context: Context,
+) {
+    actual fun createDriver(): SqlDriver =
+        AndroidSqliteDriver(
+            schema = SubsTrackerDatabase.Schema,
+            context = context,
+            name = "substracker.db",
+        )
+}

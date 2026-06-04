@@ -1,0 +1,22 @@
+-- v1 schema: deliberately minimal. Status (assumed Active), rollover/leap-day
+-- policies (domain defaults), and startDate are not persisted yet; they arrive
+-- via migrations when edit/cancel features land.
+CREATE TABLE subscriptionEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    price_minor_units INTEGER NOT NULL,
+    price_currency TEXT NOT NULL, -- Currency enum name: EUR/USD/GBP/JPY
+    frequency_type TEXT NOT NULL, -- MONTHLY | ANNUALLY | ONE_TIME
+    anchor_day INTEGER, -- 1..31; NULL for ONE_TIME
+    anchor_month INTEGER, -- 1..12; ANNUALLY only
+    created_at INTEGER NOT NULL, -- epoch millis
+    updated_at INTEGER NOT NULL -- epoch millis
+);
+
+insert:
+INSERT INTO subscriptionEntity(id, name, price_minor_units, price_currency,
+    frequency_type, anchor_day, anchor_month, created_at, updated_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+selectAll:
+SELECT * FROM subscriptionEntity ORDER BY created_at DESC;
