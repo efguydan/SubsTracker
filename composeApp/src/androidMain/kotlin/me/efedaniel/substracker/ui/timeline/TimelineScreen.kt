@@ -30,20 +30,23 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import me.efedaniel.substracker.ui.home.HomeScreenScaffold
 import me.efedaniel.substracker.ui.proton.components.text.ProtonText
 import me.efedaniel.substracker.ui.proton.theme.ProtonTheme
 import me.efedaniel.substracker.ui.proton.tokens.dimension.ProtonDimension
 
 @Composable
-fun TimelineRoute(modifier: Modifier = Modifier) {
-    TimelineScreen(
-        state = sampleTimelineState,
-        modifier = modifier,
-    )
+fun TimelineScreen(modifier: Modifier = Modifier) {
+    HomeScreenScaffold(title = "Lighter", modifier = modifier) { padding ->
+        TimelineContent(
+            state = sampleTimelineState,
+            modifier = Modifier.padding(padding),
+        )
+    }
 }
 
 @Composable
-fun TimelineScreen(
+private fun TimelineContent(
     state: TimelineUiState,
     modifier: Modifier = Modifier,
 ) {
@@ -267,6 +270,6 @@ private fun TimelineRow(
 @Composable
 private fun TimelinePreview() {
     ProtonTheme(darkTheme = false) {
-        TimelineScreen(state = sampleTimelineState)
+        TimelineContent(state = sampleTimelineState)
     }
 }

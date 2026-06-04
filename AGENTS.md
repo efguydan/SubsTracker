@@ -22,6 +22,13 @@ Guidance for working on this Kotlin Multiplatform (KMP) project.
 - UI goes in `composeApp/` using Compose.
 - Prefer stateless Composables; use state hoisting where possible.
 
+### Navigation & screen structure
+- Navigation uses `androidx.navigation-compose` (`NavController` + `NavHost`) with **type-safe routes** — `@Serializable data object`s, enabled by the `kotlinx.serialization` plugin. No string routes.
+- Naming: the navigation route is the object `XRoute` (e.g. `TimelineRoute`); the screen composable is `XScreen` (e.g. `TimelineScreen`). Register as `composable<XRoute> { XScreen() }`. (This supersedes the older `*Route`-container/`*Screen`-content split.)
+- The app root (`HomeShell`) is a **thin shell** owning only the persistent bottom navigation bar; it adapts `HomeTab` ↔ routes. The bottom-nav routes live in `ui/navigation/HomeRoutes.kt`.
+- **Each screen owns its own `Scaffold`** (its own top bar + optional FAB + content) via the `HomeScreenScaffold` helper in `ui/home/`. Per-screen FABs live on the screen, not the root.
+- Don't put preview/sample state on a public composable's default args (see *Preview data*). Keep the screen's public composable parameterless (or hoist real state); render placeholder/sample data through a `private` content composable.
+
 ### Proton design system
 - All UI consumes the Proton system in `composeApp/.../ui/proton/`. Read `ProtonTheme.colors.*` and `ProtonTheme.typography.*` from screens — not `MaterialTheme.colorScheme.*` / `MaterialTheme.typography.*`.
 - Use `ProtonDimension` tokens (`Spacing*`, `Corner*`, `ComponentSize*`) for layout values. If a value isn't a token, add it rather than inline a raw `dp`.
