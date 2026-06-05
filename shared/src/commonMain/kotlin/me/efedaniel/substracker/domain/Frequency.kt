@@ -28,7 +28,8 @@ sealed interface Frequency {
     data object OneTime : Frequency
 }
 
-private fun Month.maxAnchorDay(): Int =
+/** Largest anchor day selectable for this month (Feb 29 is valid; leap handling is policy-driven). */
+fun Month.maxAnchorDay(): Int =
     when (this) {
         Month.FEBRUARY -> 29
         Month.APRIL, Month.JUNE, Month.SEPTEMBER, Month.NOVEMBER -> 30

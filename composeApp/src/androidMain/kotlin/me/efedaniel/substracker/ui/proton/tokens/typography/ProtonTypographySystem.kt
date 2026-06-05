@@ -48,11 +48,26 @@ val ProtonTypographySystem =
                 lineHeight = 36.sp,
                 letterSpacing = (-0.02).em,
             ),
+        titleLarge =
+            TextStyle(
+                fontFamily = manropeFamily,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.sp,
+                lineHeight = 28.sp,
+                letterSpacing = (-0.02).em,
+            ),
         titleMedium =
             TextStyle(
                 fontFamily = interFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 18.sp,
+                lineHeight = 24.sp,
+            ),
+        bodyLarge =
+            TextStyle(
+                fontFamily = interFamily,
+                fontWeight = FontWeight.Medium,
+                fontSize = 16.sp,
                 lineHeight = 24.sp,
             ),
         bodyMedium =
@@ -68,5 +83,13 @@ val ProtonTypographySystem =
                 fontWeight = FontWeight.Medium,
                 fontSize = 12.sp,
                 lineHeight = 16.sp,
+            ),
+        labelSmall =
+            TextStyle(
+                fontFamily = interFamily,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 10.sp,
+                lineHeight = 14.sp,
+                letterSpacing = 0.1.em,
             ),
     )

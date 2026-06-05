@@ -108,5 +108,18 @@ object ProtonDimension {
     @Stable
     val Corner16 = 16.dp
 
+    @Stable
+    val Corner24 = 24.dp
+
+    // endregion
+
+    // region Drag Handle
+
+    @Stable
+    val DragHandleWidth40 = 40.dp
+
+    @Stable
+    val DragHandleHeight4 = 4.dp
+
     // endregion
 }

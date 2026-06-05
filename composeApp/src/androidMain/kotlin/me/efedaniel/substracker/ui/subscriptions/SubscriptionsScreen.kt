@@ -59,8 +59,18 @@ private fun SubscriptionsScreenWithData(
         AddSubscriptionSheet(
             sheetState = sheetState,
             onDismiss = { showAddSheet = false },
-            onConfirm = { name, priceText, currency, frequency ->
-                if (viewModel.addSubscription(name, priceText, currency, frequency)) {
+            onConfirm = { name, priceText, currency, frequency, billingDay, anchorMonth, startDate ->
+                val added =
+                    viewModel.addSubscription(
+                        name = name,
+                        priceText = priceText,
+                        currency = currency,
+                        frequency = frequency,
+                        billingDay = billingDay,
+                        anchorMonth = anchorMonth,
+                        startDate = startDate,
+                    )
+                if (added) {
                     scope.launch { sheetState.hide() }.invokeOnCompletion {
                         if (!sheetState.isVisible) showAddSheet = false
                     }
