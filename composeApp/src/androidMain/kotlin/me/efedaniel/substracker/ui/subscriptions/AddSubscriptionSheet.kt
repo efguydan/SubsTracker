@@ -1,5 +1,11 @@
 package me.efedaniel.substracker.ui.subscriptions
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -148,40 +154,53 @@ fun AddSubscriptionSheet(
                 labelText = { it.label },
             )
 
-            when (frequency) {
-                FrequencyChoice.Monthly -> {
-                    Spacer(Modifier.height(ProtonDimension.Spacing16))
-                    ProtonTextField(
-                        value = billingDayText,
-                        onValueChange = { billingDayText = it },
-                        label = "Billing day",
-                        helperText = "On short months we'll bill on the last day",
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        trailingIcon = { CalendarIcon() },
-                    )
-                }
+            AnimatedContent(
+                targetState = frequency,
+                transitionSpec = {
+                    val fadeThrough =
+                        fadeIn(animationSpec = tween(durationMillis = 220, delayMillis = 90)) togetherWith
+                            fadeOut(animationSpec = tween(durationMillis = 90))
+                    fadeThrough.using(SizeTransform(clip = false))
+                },
+                label = "billingAnchorFields",
+            ) { target ->
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    when (target) {
+                        FrequencyChoice.Monthly -> {
+                            Spacer(Modifier.height(ProtonDimension.Spacing16))
+                            ProtonTextField(
+                                value = billingDayText,
+                                onValueChange = { billingDayText = it },
+                                label = "Billing day",
+                                helperText = "On short months we'll bill on the last day",
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                trailingIcon = { CalendarIcon() },
+                            )
+                        }
 
-                FrequencyChoice.Annually -> {
-                    Spacer(Modifier.height(ProtonDimension.Spacing16))
-                    FieldLabel(text = "Renewal date")
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        MonthDropdownField(
-                            selected = anchorMonth,
-                            onSelected = { anchorMonth = it },
-                            modifier = Modifier.weight(2f),
-                        )
-                        Spacer(Modifier.width(ProtonDimension.Spacing12))
-                        ProtonTextField(
-                            value = billingDayText,
-                            onValueChange = { billingDayText = it },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            modifier = Modifier.weight(1f),
-                        )
+                        FrequencyChoice.Annually -> {
+                            Spacer(Modifier.height(ProtonDimension.Spacing16))
+                            FieldLabel(text = "Renewal date")
+                            Row(modifier = Modifier.fillMaxWidth()) {
+                                MonthDropdownField(
+                                    selected = anchorMonth,
+                                    onSelected = { anchorMonth = it },
+                                    modifier = Modifier.weight(2f),
+                                )
+                                Spacer(Modifier.width(ProtonDimension.Spacing12))
+                                ProtonTextField(
+                                    value = billingDayText,
+                                    onValueChange = { billingDayText = it },
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    modifier = Modifier.weight(1f),
+                                )
+                            }
+                            FieldHelperText(text = "Renews every year on this date")
+                        }
+
+                        FrequencyChoice.OneTime -> Unit
                     }
-                    FieldHelperText(text = "Renews every year on this date")
                 }
-
-                FrequencyChoice.OneTime -> Unit
             }
             Spacer(Modifier.height(ProtonDimension.Spacing24))
 
