@@ -33,8 +33,11 @@ private val DarkColorScheme =
         onBackground = ProtonColor.White,
         surface = ProtonColor.OnSurface,
         onSurface = ProtonColor.White,
+        onSurfaceVariant = ProtonColor.OnSurfaceVariantDark,
         surfaceContainerLow = ProtonColor.SurfaceContainerLowDark,
         surfaceContainerLowest = ProtonColor.SurfaceContainerLowestDark,
+        surfaceContainerHighest = ProtonColor.SurfaceContainerHighestDark,
+        outline = ProtonColor.OutlineDark,
         error = ProtonColor.Error,
         onError = ProtonColor.White,
     )
@@ -53,8 +56,11 @@ private val LightColorScheme =
         onBackground = ProtonColor.OnSurface,
         surface = ProtonColor.Surface,
         onSurface = ProtonColor.OnSurface,
+        onSurfaceVariant = ProtonColor.OnSurfaceVariant,
         surfaceContainerLow = ProtonColor.SurfaceContainerLow,
         surfaceContainerLowest = ProtonColor.SurfaceContainerLowest,
+        surfaceContainerHighest = ProtonColor.SurfaceContainerHighest,
+        outline = ProtonColor.Outline,
         error = ProtonColor.Error,
         onError = ProtonColor.White,
     )
